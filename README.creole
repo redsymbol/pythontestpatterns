@@ -1,0 +1,13 @@
+The start of some example patterns of automated testing in python, with
+commentary.
+
+This is so far from complete, it's not even incomplete yet. I just set this up
+to share a couple of rough demos easily.
+
+LICENSE
+
+All code is in the public domain.
+
+AUTHOR
+
+This is the fault of Aaron Maxwell - amax AT redsymbol DOT net
