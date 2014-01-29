@@ -41,14 +41,29 @@ class TestSimple(unittest.TestCase):
         actual = wordcount(corpus)
         self.assertEqual(expected, actual)
 
-    def test_StatsTable(self):
+CORPUS = 'The quick brown fox jumped over the lazy dog'
+class TestStatsTable(unittest.TestCase):
+    def setUp(self):
         from simple import StatsTable
+        self.stats = StatsTable(CORPUS)
 
-        corpus = 'The quick brown fox jumped over the lazy dog'
-        stats = StatsTable(corpus)
-        self.assertEqual(1, stats.count('quick'))
-        self.assertEqual(2, stats.count('the'))
-        self.assertEqual(2, stats.count('The'))
-        self.assertEqual(2.0/9, stats.frequency('the'))
-        self.assertAlmostEqual(.1102, stats.stddev(), places=4)
-        
+    def test_counts(self):
+        self.assertEqual(1, self.stats.count('quick'))
+        self.assertEqual(2, self.stats.count('the'))
+        self.assertEqual(2, self.stats.count('The'))
+        self.assertEqual(2.0/9, self.stats.frequency('the'))
+        self.assertAlmostEqual(.1102, self.stats.stddev(), places=4)
+
+    def test_add(self):
+        self.assertEqual(1, self.stats.count('quick'))
+        self.stats.add('quick')
+        self.assertEqual(2, self.stats.count('quick'))
+        self.stats.add('quick')
+        self.assertEqual(3, self.stats.count('quick'))
+    
+    def test_reset(self):
+        self.assertEqual(1, self.stats.count('quick'))
+        self.stats.add('quick')
+        self.assertEqual(2, self.stats.count('quick'))
+        self.stats.reset(CORPUS)
+        self.assertEqual(1, self.stats.count('quick'))

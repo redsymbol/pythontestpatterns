@@ -36,6 +36,14 @@ class StatsTable(object):
             return self.counts[key]
         return 0
 
+    def add(self, word):
+        key = word.lower()
+        try:
+            prev_count = self.counts[key]
+        except KeyError:
+            prev_count = 0
+        self.counts[key] = prev_count + 1
+
     def frequency(self, word):
         totalcount = sum(self.counts.values())
         return self.count(word) / float(totalcount)
@@ -49,3 +57,6 @@ class StatsTable(object):
             val += self.frequency(word) * (count - mean_count)
         val = math.sqrt(float(val) / numwords)
         return val
+
+    def reset(self, corpus):
+        self.counts = wordcount(corpus)
